@@ -1,37 +1,11 @@
 {
     "level_id": 1,
-    "title": "Operation: Digital Harvest ",
-    "theme": "Harvest",
-    "briefing": "Infiltrate the Agrocrop network and Harvest all active Data clusters before the purge cycle begins." ,
-    "player_start": { "x": 1, "y": 1 } ,
-    "map_grid": [
-        [1, 1, 1, 1, 1, 1, 1] ,
-        [1, 0, 0, 2, 0, 0, 1] ,
-        [1, 0, 1, 1, 1, 0, 1] ,
-        [1, 3, 0, 0, 0, 4, 1] ,
-        [1, 1, 1, 1, 1, 1, 1] 
-    ],
-    "nodes":{
-        "crop_node_1": {
-            "id": " crop_node_1" ,
-            "name" : "BioData Clusters Alpha" ,
-            "ip" : "10.0.1.12", 
-            "status": "unharvested",
-            "yield_value" : 250 ,
-            "security": "low"
-        },
-        "crop_node_2": {
-            "id": " crop_node_2" ,
-            "name" : "Yield Vault Beta" ,
-            "ip" : "10.0.1.50", 
-            "status": "unharvested",
-            "yield_value" : 500 ,
-            "security": "medium"
-        }   
+    "title": "Bridging The Gap" ,
+    "player_start": { "x": 0, "y": 0 }  ,
+    "hole":{
+        "start_x": 3,
+        "required_length": 6 
     },
-    "harvest_objective" : {
-        "total_nodes": 2,
-        "target_yield" : 750
-    },
-    "commands_allowed": ["scan", "move" , "harvest" , "extract", "help" ]
+    "exit_x": 10,
+    "objective": "Type a striing long enough to hole (6 units wide), then walk across to the exit."
 }
