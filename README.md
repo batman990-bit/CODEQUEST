@@ -1,2 +1,2 @@
 # CODEQUEST
-A retro-cyberpunk CLI RPG where players execute terminal commands alongside a 2D pixel-art visual stage to hack nodes, purge malware, and solve code puzzles.
+A multi-world coding puzzle game where players write python commands alongside a 2D pixel-art visual stage to repair fields, solve logic puzzles, and unlock new environments every week.
