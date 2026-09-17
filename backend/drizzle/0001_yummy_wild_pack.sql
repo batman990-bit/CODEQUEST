@@ -1,0 +1,1 @@
+ALTER TABLE "user_info" ALTER COLUMN "user_progress" SET DEFAULT 0;
