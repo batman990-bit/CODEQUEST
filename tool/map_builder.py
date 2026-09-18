@@ -34,5 +34,5 @@ def build_level() :
     print(f"\n Saved level to {file_path}!!!")
 
 
-if __name__ == "___main___" :
+if __name__ == "__main__" :
     build_level()
