@@ -23,6 +23,19 @@ export function parseCommand(rawInput) {
       steps: parseInt(moveMatch[2], 10)
     };
   }
+
+  const varMatch = input.match(/^(?:let\s+)?([a-zA-Z_$][a-zA-Z0-9_$]*)\s*=\s*(\d+);?$/);
+  if (varMatch) {
+    return {
+      valid: true,
+      action: 'assign_var',
+      varName: varMatch[1],
+      value: parseInt(varMatch[2], 10)
+    };
+  }
+
+
+
   const cmd = input.toLocaleLowerCase();
   if (cmd === 'help') return { valid: true, action: 'help' };
   if (cmd === 'clear') return { valid: true, action: 'clear' };
