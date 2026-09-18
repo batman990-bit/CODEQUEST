@@ -1,0 +1,16 @@
+{
+    "level_id": 2,
+    "title": "Variable Bridge",
+    "player_start": {
+        "x": 0,
+        "y": 0
+    },
+    "hole": {
+        "start_x": 4,
+        "required_lenght": 8
+    },
+    "exit_x": 14,
+    "concept": "variables",
+    "required_variable": "plank",
+    "objective": "Declear 'planl = 8' to bridge the gap and reach the portal."
+}
