@@ -7,7 +7,7 @@
     },
     "hole": {
         "start_x": 4,
-        "required_lenght": 8
+        "required_length": 8
     },
     "exit_x": 14,
     "concept": "variables",
