@@ -1,0 +1,18 @@
+{
+    "level_id": 3,
+    "title" : "Boulder Barricade",
+    "player_start": { "x": 0, "y": 0},
+    "hazard": {
+        "type" : "Boulder",
+        "trigger_x" : 8
+    },
+    "obstacle": {
+        "x": 6,
+        "required_length" : 10,
+        "symbol" : "#"
+    },
+    "exit_x" :12,
+    "concept" : "string_multipilication" ,
+    "required_variable" : "wall",
+    "objective": "A Boulder is rollong in! Store a wall of lenght 10 in 'wall' using string_multipilication ('#' * 10), then print wall to block it. "
+}
