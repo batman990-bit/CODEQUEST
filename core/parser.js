@@ -45,3 +45,30 @@ export function parseCommand(rawInput) {
     error: `Unknown command: '${input}' . Try print("your_word") or player_move_right(1).`
   };
 }
+
+export function evaluateLevel1(parsedResult, levelConfig) {
+  if (!parsedResult.valid) return parsedResult;
+
+  if (parsedResult.action === 'print' ) {
+    const bridgeLength = parsedResult.text.length;
+    const requiredLength = levelConfig.hole.required_length;
+
+    if (bridgeLength === requiredLength) {
+      return {
+        success: true,
+        action: 'build_bridge',
+        bridgeLength: bridgeLength,
+        message: `Bridge built Successfully! length matches ${requiredLength}.`
+      };
+    } else{
+      return{
+        success:false,
+        action: 'build_bridge_failed',
+        bridgeLength : bridgeLength,
+        error: `Bridge length is ${bridgeLength}, but the hole requires length ${requiredLength}. `
+      };
+    }
+  }
+
+  return parsedResult;
+}
