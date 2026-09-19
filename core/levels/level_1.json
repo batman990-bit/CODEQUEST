@@ -9,5 +9,5 @@
     "exit_x": 10,
     "concept": "strings",
     "required_variable": null,
-    "objective": "Type a striing long enough to hole (6 units wide), then walk across to the exit."
+    "objective": "Type a striing long enough to hole (5 units wide), then walk across to the exit."
 }
