@@ -57,7 +57,10 @@ export function evaluateLevel1(parsedResult, levelConfig) {
       return {
         success: true,
         action: 'build_bridge',
+        animation: 'drop_from_sky',
+        spawn_x: levelConfig.hole.start_x,
         bridgeLength: bridgeLength,
+        text:parsedResult.text,
         message: `Bridge built Successfully! length matches ${requiredLength}.`
       };
     } else{
