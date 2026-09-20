@@ -7,8 +7,21 @@
     <title>CodeQuest</title>
 </head>
 <body>
-    <div>
-        <canvas></canvas>
+    <div class="container">
+        <canvas id="terminal-canvas"></canvas>
+        <div class="terminal-ui">
+            <div class="output">
+                <div>World generated . Start typing to begin and have fun!</div>
+            </div>
+            <div class="input-line">
+                <span class="prompt">user@system;~$</span>
+                <input type="text" autofocus />
+                
+            </div>
+        </div>
+        <div class="game-content">
+                <button class="run-button">Run Code</button>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>

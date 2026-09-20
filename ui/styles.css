@@ -1,0 +1,99 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.container {
+    display: grid;
+    position: relative;
+    grid-template-columns: 1.5fr 0.5fr;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+}
+
+#terminal-canvas{
+    grid-column: 1/span 2;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.terminal-ui {
+    grid-column: 2;
+    grid-row: 1;
+    z-index: 2;
+    background: #0c0c0c;
+    padding: 30px;
+    box-sizing: border-box;
+
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.output {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.game-content {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 2;
+    background-color: #ffffff;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.input-line {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 15px;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.input-line input{
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    flex-grow: 1;
+    text-shadow: inherit;
+}
+
+.game-content .run-button {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    z-index: 10;
+    
+    background-color: #0d0d0d;
+    color: #ffffff;
+    border: 2px solid #0d0d0d;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4);
+    transition: all 0.2s ease;
+}
