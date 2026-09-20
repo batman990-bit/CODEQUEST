@@ -8,36 +8,38 @@
 </head>
 <body>
     <div class="container">
-        <canvas id="terminal-canvas"></canvas>
         <div class="terminal-ui">
             <div class="output">
                 <div>World generated . Start typing to begin and have fun!</div>
             </div>
             <div class="input-line">
-                <span class="prompt">user@system;~$</span>
+                <span class="prompt">user@system:~$</span>
                 <input type="text" autofocus />
-                
             </div>
         </div>
-      <div class="game-content">
-        <div class="hud-bar">
-          <div class="hud-item">
-            <span>Level :</span>
-            <span id="hud-level-name">1</span>
+        <div class="game-content">
+            <div class="hud-bar">
+                <div class="hud-item">
+                    <span>Level :</span>
+                    <span id="hud-level-name">1</span>
+                </div>
+                <div class="hud-item">
+                    <span>Position :</span>
+                    <span id="hud-position">-</span>
+                </div>
+                <div class="hud-item">
+                    <span>Bridge Progress :</span>
+                    <span id="hud-progress">0%</span>
+                </div>
+                <div class="hud-item">
+                    <span>Objective :</span>
+                    <span id="hud-objective">-</span>
+                </div>
+            </div>
+            <canvas id="terminal-canvas"></canvas>
+            <button class="run-button">Run Code</button>
         </div>
-        <div class="hud-item">
-          <span>Position :</span>
-          <span id="hud-position">-</span>
-        </div>
-        <div class="hud-item">
-          <span>Bridge Progress :</span>
-          <span id="hud-progress">0%</span>
-        </div>
-        <div class="hud-item">
-          <span>Objective :</span>
-          <span id="hud-objective">-</span>
-        </div>
-      </div>
-      <canvas id="terminal-canvas"></canvas>
-      <button class="run-button">Run Code</button>
     </div>
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
