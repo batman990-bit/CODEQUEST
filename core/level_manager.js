@@ -1,4 +1,4 @@
-import { parseCommand , evaluateLevel1 } from "./parser";
+import { parseCommand , evaluateLevel1 } from "./parser.js";
 export class LevelManager {
     constructor(levelConfig) {
         this.levelConfig = levelConfig;
