@@ -48,10 +48,10 @@ export class GameEngine {
 
 
      this.ctx.fillStyle = '#7F4F24';
-     this.targetY.ctx.fillRect(0, PATH_Y + leftWidth, 4);
-     this.targetY.ctx.fillRect(0, PATH_Y + PATH_HEIGHT - 4, leftWidth, 4 );
-     this.targetY.ctx.fillRect(rightX, PATH_Y, 300, 4 );
-     this.targetY.ctx.fillRect(rightX, PATH_Y + PATH_HEIGHT - 4 , 300 , 4);
+     this.ctx.fillRect(0, PATH_Y + leftWidth, 4);
+     this.ctx.fillRect(0, PATH_Y + PATH_HEIGHT - 4, leftWidth, 4 );
+     this.ctx.fillRect(rightX, PATH_Y, 300, 4 );
+     this.ctx.fillRect(rightX, PATH_Y + PATH_HEIGHT - 4 , 300 , 4);
 
      this.ctx.fillStyle = '#3E2723';
      this.ctx.fillRect (holeX, PATH_Y, holeWidth, PATH_HEIGHT);
@@ -107,6 +107,20 @@ export class GameEngine {
     }
   }
 
+  handlePrint(text) {
+    if (!text) {
+      return { success: false, message: 'Print function requires text,' };
+    }
+
+    this.currentBridgeLength += text.length ;
+    this.triggerSkyDrop(text);
+
+    return {
+      success: true,
+      message: `Placed bridge plank with text: "${text}". `
+    };
+  }
+
   handleMove(direction, steps) {
     if (direction !== 'right' && direction !== 'left') {
       return {
@@ -159,21 +173,22 @@ export class GameEngine {
     this.isAnimating = true ;
     this.animateDrop();
   }
+animateDrop() {
+  if (!this.isAnimating) return;
 
-  animateDrop() {
-    if (!this.isAnimating) return;
+  this.bridgeY += 8; // Move down 8px per frame
 
-    if (this.bridgeY >= this.targetY) {
-      this.bridgeY = this.targetY;
-      this.isAnimating = false;
-    }
-
-    this.renderScene();
-
-    if (this.isAnimating) {
-      requestAnimationFrame(() => this.animateDrop());
-    }
+  if (this.bridgeY >= this.targetY) {
+    this.bridgeY = this.targetY;
+    this.isAnimating = false;
   }
+
+  this.renderScene();
+
+  if (this.isAnimating) {
+    requestAnimationFrame(() => this.animateDrop());
+  }
+}
   handleHelp() {
     return {
       success: true,
