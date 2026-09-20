@@ -1,13 +1,87 @@
 import { parseCommand } from './parser.js';
+import { LevelManager } from './level_manager.js';
+
+const TILE_SIZE = 40;
+const PATH_Y = 160;
+const PATH_HEIGHT = 80;
 
 export class GameEngine {
-  constructor(levelData) {
+  constructor(levelData , canvasId = 'gameCanvas') {
     this.level = levelData;
     this.playerX = levelData.player_start.x;
     this.bridgeBlocks = [];
     this.currentBridgeLength = 0;
     this.isGameOver = false;
+
+    this.canvas = document.getElementById(this.canvasId);
+    this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+    this.levelManager = new LevelManager(levelData);
+    
+    this.bridgeY =  0;
+    this.targetY = 250 ;
+    this.isAnimating = false;
+    this.activeBridgeText = '';
   }
+  
+  renderScene() {
+    if (!this.ctx) return ;
+
+     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+     this.ctx.fillStyle = '#5B8C33'; 
+     this.ctx.fillRect = (0 , 0, this.canvas.width, this.canvas.height);
+
+     this.ctx.fillStyle = '#7BB63E';
+     for (let i = 0 ; i < this.canvas.width; i += 20 ) {
+      this.ctx.fillRect(i, 20 ,12,100);
+      this.ctx.fillRect(i, PATH_Y + PATH_HEIGHT + 20, 12, 100); 
+     }
+
+     const leftWidth  = this.level.hole.start_x * TILE_SIZE;
+     const holeX  = this.level.hole.start_x * TILE_SIZE;
+     const holeWidth = this.level.hole.required_length * TILE_SIZE;
+     const rightX  = holeX + holeWidth ;
+
+     this.ctx.fillStyle = '#9C6644' ;
+     this.ctx.fillRect(0, PATH_Y, leftWidth, PATH_HEIGHT);
+     this.ctx.fillRect(rightX, PATH_Y ,300 , PATH_HEIGHT);
+
+
+     this.ctx.fillStyle = '#7F4F24';
+     this.ctx.fillRect(0, PATH_Y + leftWidth, 4);
+     this.ctx.fillRect(0, PATH_Y + PATH_HEIGHT - 4, leftWidth, 4 );
+     this.ctx.fillRect(rightX, PATH_Y, 300, 4 );
+     this.ctx.fillRect(rightX, PATH_Y + PATH_HEIGHT - 4 , 300 , 4);
+
+     this.ctx.fillStyle = '#3E2723';
+     this.ctx.fillRect (holeX, PATH_Y, holeWidth, PATH_HEIGHT);
+
+     if (this.activeBridgeText) {
+      this.ctx.fillStyle = '#C08552';
+      this.ctx.fillRect(holeX, PATH_Y + (this.bridgeY % PATH_HEIGHT), holeWidth, PATH_HEIGHT);
+
+      this.ctx.strokeStyle = '#5D4037';
+      this.ctx.lineWidth = 3;
+      this.ctx.strokeRect(holeX, PATH_Y + (this.bridgeY % PATH_HEIGHT), holeWidth, PATH_HEIGHT);
+
+      this.ctx.fillStyle = '#3E2723' ;
+      this.ctx.font = 'bold 16px monospace' ;
+      this.ctx.textAlign = 'center' ; 
+      this.ctx.filltext (
+        this.activeBridgeText,
+        holeX + (holeWidth / 2),
+        PATH_Y + (PATH_HEIGHT / 2) + 5
+      );
+      this.ctx.textAlign = 'left'; 
+     }
+      const exitX = this.level.exitX * TILE_SIZE;
+      this.ctx.fillStyle = '#2A8C82';
+      this.ctx.fillRect(exitX, PATH_Y, 30, PATH_HEIGHT);
+
+      this.ctx.fillRect(this.playerX * TILE_SIZE + 5, PATH_Y, + 20, 30, 40 )
+
+    }
+
 
   execute(inputString) {
     if (this.isGameOver) {
@@ -31,6 +105,20 @@ export class GameEngine {
       default:
         return { success: false, message: 'Execution logic missing.' };
     }
+  }
+
+  handlePrint(text) {
+    if (!text) {
+      return { success: false, message: 'Print function requires text,' };
+    }
+
+    this.currentBridgeLength += text.length ;
+    this.triggerSkyDrop(text);
+
+    return {
+      success: true,
+      message: `Placed bridge plank with text: "${text}". `
+    };
   }
 
   handleMove(direction, steps) {
@@ -67,29 +155,40 @@ export class GameEngine {
       message: `Moved ${direction} by ${distance} step(s). Current Pos: (${this.playerX})`
     };
   }
+  
 
-  handlePrint(text) {
-    const spawnedLength = text.length;
-    this.currentBridgeLength += spawnedLength;
-    this.bridgeBlocks.push(text);
+  handleInput(rawInput) {
+    const result = this.levelManager.processPlayerInput(rawInput);
 
-    const remaining = this.level.hole.required_length - this.currentBridgeLength;
-
-    if (remaining <= 0) {
-      return {
-        success: true,
-        spawnText: text,
-        message: `Dropped "${text}" (${spawnedLength} blocks)! Bridge completed. Cross over!`
-      };
+    if (result.success && result.animation === 'drop_from_sky') {
+      this.triggerSkyDrop(result.text);
     }
 
-    return {
-      success: true,
-      spawnText: text,
-      message: `Dropped "${text}". Need ${remaining} more blocks to bridge the hole.`
-    };
+    return result; 
   }
 
+  triggerSkyDrop(text) {
+    this.activeBridgeText = text;
+    this.bridgeY = 0;
+    this.isAnimating = true ;
+    this.animateDrop();
+  }
+animateDrop() {
+  if (!this.isAnimating) return;
+
+  this.bridgeY += 8; // Move down 8px per frame
+
+  if (this.bridgeY >= this.targetY) {
+    this.bridgeY = this.targetY;
+    this.isAnimating = false;
+  }
+
+  this.renderScene();
+
+  if (this.isAnimating) {
+    requestAnimationFrame(() => this.animateDrop());
+  }
+}
   handleHelp() {
     return {
       success: true,
