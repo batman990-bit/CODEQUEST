@@ -1,4 +1,4 @@
-import { GameEngine } from "./core/engine.js";
+import { GameEngine } from "../core/engine.js";
 
 const canvas = document.getElementById('terminal-canvas');
 const ctx = canvas.getContext('2d');
@@ -12,9 +12,12 @@ const levelData = {
     exit_x: 10
 }
 
-const engine = new GameEngine(levelData);
+const engine = new GameEngine(levelData, 'terminal-canvas') ;
 
 function logToTerminal(text, isSuccessful) {
+    const outputLog = document.querySelector('.output')
+    if (!outputLog) return;
+    
     const logLine = document.createElement('div');
     logLine.innerHTML = text.replace(/\n/g, '<br>')
     if (isSuccessful) {
@@ -27,7 +30,11 @@ function logToTerminal(text, isSuccessful) {
 }
 
 function executeCommand() {
-    const codeString = inputField.value.trim();
+    const inputField = document.querySelector('.input-line input');
+    const currentOutput = document.querySelector('.output');
+    if (!inputField || !currentOutput ) return;
+
+    const codeString = inputField.value.trim()
     if (!codeString) return;
 
     const echoLine = document.createElement('div');
@@ -36,31 +43,50 @@ function executeCommand() {
     outputLog.appendChild(echoLine);
 
     const result = engine.execute(codeString);
-
-    if (result.message === 'Clear_Terminal') {
+    if (!result) {
+        logToTerminal("Error: Engine returned no response object.", false);
+    } else if (result.message === 'Clear_Terminal') {
         outputLog.innerHTML = '';
     } else {
-        logToTerminal(result.message, result.success);
+        logToTerminal(result.message ?? "Unknown command output.", result.success ?? false);
     }
-
+    
     inputField.value = '';
     outputLog.scrollTop = outputLog.scrollHeight;
+
+    if (engine && engine.ctx) {
+        engine.renderScene();
+    }
 }
 
-runButton.addEventListener('click', executeCommand);
-inputField.addEventListener('keydown',(e)=>{
-    if (e.key === 'Enter') {
-        executeCommand();
+
+window.addEventListener('DOMContentLoaded', () => {
+    const runButton = document.querySelector('.game-content .run-button');
+    const inputField = document.querySelector('.input-line input');
+
+    if (runButton) {
+        runButton.addEventListener('click', executeCommand);
+    }
+
+    if (inputField) {
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key ==='Enter') {
+                executeCommand();
+            }
+        })
     }
 })
+
+
 
 
 function resize() {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (engine && engine.ctx) {
+        engine.renderScene();
+    }
 }
 
 window.addEventListener('resize', resize);

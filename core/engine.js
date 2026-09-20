@@ -13,7 +13,7 @@ export class GameEngine {
     this.currentBridgeLength = 0;
     this.isGameOver = false;
 
-    this.canvas = document.getElementById(this.canvasId);
+    this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
     this.levelManager = new LevelManager(levelData);
     
@@ -29,7 +29,7 @@ export class GameEngine {
      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
      this.ctx.fillStyle = '#5B8C33'; 
-     this.ctx.fillRect = (0 , 0, this.canvas.width, this.canvas.height);
+     this.ctx.fillRect(0 , 0, this.canvas.width, this.canvas.height);
 
      this.ctx.fillStyle = '#7BB63E';
      for (let i = 0 ; i < this.canvas.width; i += 20 ) {
@@ -67,7 +67,7 @@ export class GameEngine {
       this.ctx.fillStyle = '#3E2723' ;
       this.ctx.font = 'bold 16px monospace' ;
       this.ctx.textAlign = 'center' ; 
-      this.ctx.filltext (
+      this.ctx.fillText (
         this.activeBridgeText,
         holeX + (holeWidth / 2),
         PATH_Y + (PATH_HEIGHT / 2) + 5
@@ -78,7 +78,7 @@ export class GameEngine {
       this.ctx.fillStyle = '#2A8C82';
       this.ctx.fillRect(exitX, PATH_Y, 30, PATH_HEIGHT);
 
-      this.ctx.fillRect(this.playerX * TILE_SIZE + 5, PATH_Y, + 20, 30, 40 )
+      this.ctx.fillRect(this.playerX * TILE_SIZE + 5, PATH_Y + 20, 30, 40 )
 
     }
 
