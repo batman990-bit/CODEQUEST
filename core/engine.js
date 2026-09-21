@@ -48,7 +48,7 @@ export class GameEngine {
 
 
      this.ctx.fillStyle = '#7F4F24';
-     this.ctx.fillRect(0, PATH_Y + leftWidth, 4);
+     this.ctx.fillRect(0, PATH_Y , leftWidth, 4);
      this.ctx.fillRect(0, PATH_Y + PATH_HEIGHT - 4, leftWidth, 4 );
      this.ctx.fillRect(rightX, PATH_Y, 300, 4 );
      this.ctx.fillRect(rightX, PATH_Y + PATH_HEIGHT - 4 , 300 , 4);
