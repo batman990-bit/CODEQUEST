@@ -18,7 +18,7 @@ export class GameEngine {
     this.levelManager = new LevelManager(levelData);
     
     this.bridgeY =  0;
-    this.targetY = 250 ;
+    this.targetY = PATH_Y ;
     this.isAnimating = false;
     this.activeBridgeText = '';
   }
@@ -44,21 +44,22 @@ export class GameEngine {
 
      this.ctx.fillStyle = '#9C6644' ;
      this.ctx.fillRect(0, PATH_Y, leftWidth, PATH_HEIGHT);
-     this.ctx.fillRect(rightX, PATH_Y ,300 , PATH_HEIGHT);
+     this.ctx.fillRect(rightX, PATH_Y , this.canvas.width - rightX , PATH_HEIGHT);
 
 
      this.ctx.fillStyle = '#7F4F24';
-     this.ctx.fillRect(0, PATH_Y + leftWidth, 4);
+     this.ctx.fillRect(0, PATH_Y, leftWidth, 4);
      this.ctx.fillRect(0, PATH_Y + PATH_HEIGHT - 4, leftWidth, 4 );
-     this.ctx.fillRect(rightX, PATH_Y, 300, 4 );
-     this.ctx.fillRect(rightX, PATH_Y + PATH_HEIGHT - 4 , 300 , 4);
+     this.ctx.fillRect(rightX, PATH_Y, this.canvas.width - rightX, 4 );
+     this.ctx.fillRect(rightX, PATH_Y + PATH_HEIGHT - 4 , this.canvas.width - rightX , 4);
 
      this.ctx.fillStyle = '#3E2723';
      this.ctx.fillRect (holeX, PATH_Y, holeWidth, PATH_HEIGHT);
 
      if (this.activeBridgeText) {
       this.ctx.fillStyle = '#C08552';
-      this.ctx.fillRect(holeX, PATH_Y + (this.bridgeY % PATH_HEIGHT), holeWidth, PATH_HEIGHT);
+      const currentY = this.bridgeY;
+      this.ctx.fillRect(holeX, currentY, holeWidth, PATH_HEIGHT);
 
       this.ctx.strokeStyle = '#5D4037';
       this.ctx.lineWidth = 3;
@@ -74,10 +75,11 @@ export class GameEngine {
       );
       this.ctx.textAlign = 'left'; 
      }
-      const exitX = this.level.exitX * TILE_SIZE;
+      const exitX = this.level.exit_x * TILE_SIZE;
       this.ctx.fillStyle = '#2A8C82';
       this.ctx.fillRect(exitX, PATH_Y, 30, PATH_HEIGHT);
 
+      this.ctx.fillStyle = '#E63946'
       this.ctx.fillRect(this.playerX * TILE_SIZE + 5, PATH_Y + 20, 30, 40 )
 
     }

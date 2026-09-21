@@ -55,6 +55,9 @@ body, html {
     gap: 8px;
     padding-right: 5px;
     line-height: 1.4;
+    height: 300px;
+    overflow-x: hidden;
+    word-wrap: break-word;
 }
 
 .game-content {
