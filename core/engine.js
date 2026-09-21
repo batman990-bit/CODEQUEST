@@ -133,12 +133,22 @@ export class GameEngine {
 
     const distance = steps || 1;
     const targetX = direction === 'right' ? this.playerX + distance : this.playerX - distance;
-
-    if (targetX >= this.level.hole.start_x && this.currentBridgeLength < this.level.hole.required_length) {
-      return {
-        success: false,
-        message: `Blocked! Hole at X:${this.level.hole.start_x}. Build a bridge with print("...") first.`
-      };
+    
+    if (
+      targetX >= this.level.hoel.start_x &&
+      targetX < this.level.hole.start_x + this.level.hole.required_length
+    ){
+      const requiredBridgeAtTarget = (targetX - this.level.hole.start_x)+1;
+      if (this.currentBridgeLength < requiredBridgeLengthAtTarget) {
+        this.isGameOver = true;
+        this.playerX = targetX;
+        return {
+          success: false,
+          isLoss: true,
+          playerX: this.playerX,
+          message: `CRITICAL ERROR: Fell into the gap at X:${this.playerX}`
+        }
+      }
     }
 
     this.playerX = Math.max(0, targetX);
@@ -147,6 +157,7 @@ export class GameEngine {
       this.isGameOver = true;
       return {
         success: true,
+        isWin : true,
         playerX: this.playerX,
         message: `Moved to X:${this.playerX}.\n\nLEVEL COMPLETE!`
       };
