@@ -90,7 +90,7 @@ body, html {
 
 .hud-item {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     background: transparent;
     padding: 0;
     border: none;
