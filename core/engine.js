@@ -15,7 +15,7 @@ export class GameEngine {
 
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
-    this.levelManager = new LevelManager(levelData);
+    this.levelManager = new LevelManager(levelData, this);
     
     this.bridgeY =  0;
     this.targetY = PATH_Y ;

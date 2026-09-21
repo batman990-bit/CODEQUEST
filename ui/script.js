@@ -37,7 +37,7 @@ async function initGame() {
 
         engine = new GameEngine(levelData, 'terminal-canvas');
         updateHUD(levelData)
-        resize()
+        resizeCanvas()
         logToTerminal("Please Begin", false);
     } catch (error) {
         console.error("Error loading level:", error);
@@ -127,4 +127,3 @@ function resizeCanvas() {
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
-resize();
