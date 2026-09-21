@@ -58,20 +58,20 @@ export class GameEngine {
 
      if (this.activeBridgeText) {
       this.ctx.fillStyle = '#C08552';
-      const currentY = this.bridgeY;
-      this.ctx.fillRect(holeX, currentY, holeWidth, PATH_HEIGHT);
+      this.ctx.fillRect(holeX, PATH_Y, holeWidth, PATH_HEIGHT);
 
       this.ctx.strokeStyle = '#5D4037';
       this.ctx.lineWidth = 3;
-      this.ctx.strokeRect(holeX, PATH_Y + (this.bridgeY % PATH_HEIGHT), holeWidth, PATH_HEIGHT);
+      this.ctx.strokeRect(holeX, PATH_Y, holeWidth, PATH_HEIGHT);
 
-      this.ctx.fillStyle = '#3E2723' ;
+      this.ctx.fillStyle = '#211510' ;
       this.ctx.font = 'bold 16px monospace' ;
       this.ctx.textAlign = 'center' ; 
+      this.ctx.textBaseline = 'middle';
       this.ctx.fillText (
         this.activeBridgeText,
         holeX + (holeWidth / 2),
-        PATH_Y + (PATH_HEIGHT / 2) + 5
+        PATH_Y + (PATH_HEIGHT / 2) 
       );
       this.ctx.textAlign = 'left'; 
      }
