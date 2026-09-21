@@ -117,7 +117,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-function resize() {
+function resizeCanvas() {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
@@ -125,6 +125,6 @@ function resize() {
         engine.renderScene();
     }
 }
-
-window.addEventListener('resize', resize);
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 resize();
