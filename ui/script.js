@@ -6,13 +6,45 @@ const inputField = document.querySelector('.input-line input');
 const runButton = document.querySelector('.game-content .run-button');
 const outputLog = document.querySelector('.output');
 
-const levelData = {
-    player_start: {x:0},
-    hole: {start_x:5, required_length:4},
-    exit_x: 10
+let engine;
+let levelData;
+
+function updateHUD(data, currentPlayerX=null) {
+    const hudName = document.getElementById('hud-level-name');
+    const hudPosition = document.getElementById('hud-position');
+    const hudProgress = document.getElementById('hud-progress');
+    const hudObjective = document.getElementById('hud-objective');
+
+    if (hudName) hudName.textContent = data.name || 'Level 1';
+
+    const posX = currentPlayerX !== null ? currentPlayerX : data.player_start.x;
+    if (hudPosition) hudPosition.textContent = `${posX}`
+
+    if (hudProgress) {
+        const progressPercent = Math.min(100, Math.round((posX/data.exit_x)*100));
+        hudProgress.textContent = `${progressPercent}`
+    }
+
+    if (hudObjective) hudObjective.textContent = data.objective || 'Reach The Exit';
 }
 
-const engine = new GameEngine(levelData, 'terminal-canvas') ;
+async function initGame() {
+    try {
+        const response = await fetch('../core/levels/level_1.json');
+        if (!response.ok) throw new Error("Failed to fetch level data");
+
+        levelData = await response.json();
+
+        engine = new GameEngine(levelData, 'terminal-canvas');
+        updateHUD(levelData)
+        resize()
+        logToTerminal("Please Begin", false);
+    } catch (error) {
+        console.error("Error loading level:", error);
+        logToTerminal("System Error: Couldn't reach file.", false);
+    }
+}
+
 
 function logToTerminal(text, isSuccessful) {
     const outputLog = document.querySelector('.output')
@@ -54,6 +86,10 @@ function executeCommand() {
     inputField.value = '';
     outputLog.scrollTop = outputLog.scrollHeight;
 
+    if (result && result.success && result.playerX !== undefined) {
+        updateHUD(levelData, result.playerX);
+    }
+
     if (engine && engine.ctx) {
         engine.renderScene();
     }
@@ -75,7 +111,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
-})
+    initGame();
+});
 
 
 
