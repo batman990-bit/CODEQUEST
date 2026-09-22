@@ -1,4 +1,4 @@
-import { GameEngine } from "../core/engine.js";
+import { GameEngine } from "./core/engine.js";
 
 const canvas = document.getElementById('terminal-canvas');
 const ctx = canvas.getContext('2d');
